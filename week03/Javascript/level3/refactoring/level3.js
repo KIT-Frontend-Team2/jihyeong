@@ -26,7 +26,7 @@ $submit_button.addEventListener("click", (event) => {
 });
 
 // 들고있는 주문서에 추가를 하는 액션
-function addhandlingList(ingredient, weight) {
+const addhandlingList = (ingredient, weight) => {
   // 전달받은 데이터들을 검사를 하는 계산
   if (checkInputhandling(ingredient, weight, handlingList)) {
     // 들고있는 데이터들을 보내는 액션
@@ -40,13 +40,13 @@ function addhandlingList(ingredient, weight) {
   // 해당 데이터에 접근해 빈값으로 바꿔주는 액션
   $ingredient.value = "";
   $weight.value = "";
-}
+};
 
 // 들고있는 주문서를 인덱스 번호를 통해 삭제를 하는 액션
-function deletedhandlingList(deleteId) {
+const deletedhandlingList = (deleteId) => {
   handlingList = deleteByIndex(deleteId);
   updateListDOM();
-}
+};
 
 // 들고있는 주문서를 만드는 액션
 const updateListDOM = () => {
