@@ -37,6 +37,7 @@ function addhandlingList(ingredient, weight) {
     // 안내문구 출력 액션
     alert("중복되었거나 이름을 입력하지 않았습니다.");
   }
+  // 해당 데이터에 접근해 빈값으로 바꿔주는 액션
   $ingredient.value = "";
   $weight.value = "";
 }
