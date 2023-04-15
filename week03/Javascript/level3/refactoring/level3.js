@@ -2,24 +2,26 @@
 레시피 재료 추가하기
 */
 
-// 접근하기 위한 선택자들
+// DOM 엘리먼트 선택
 const $table = document.querySelector("table");
 const $ingredient_form = document.querySelector("#ingredient-form");
 const $submit_button = document.querySelector("#submit_button");
 const $ingredient = document.querySelector("input[name = ingredient]");
 const $weight = document.querySelector("input[name = weight]");
 
-// 테이블의 윗부분은 그대로 남겨둬야하니 처음부터 저장해두는 헤더
+// 테이블의 윗부분은 그대로 남겨둬야하니 처음부터 저장해두는 헤더부분입니다.
 const $table_header = $table.innerHTML;
 
-// 들고있을 재료와 무게의 정보를 가지고있는 배열(데이터)
+// 들고있을 재료와 무게의 정보를 가지고있는 배열(데이터)입니다.
 let handlingList = [];
 
+// 들고있는 장바구니 목록을 업데이트 합니다.
 $ingredient_form.addEventListener("submit", (event) => {
   event.preventDefault();
   addhandlingList($ingredient.value, $weight.value);
 });
 
+// 제출한 리스트를 업데이트 합니다.
 $submit_button.addEventListener("click", (event) => {
   event.preventDefault();
   updateReportListDOM();
