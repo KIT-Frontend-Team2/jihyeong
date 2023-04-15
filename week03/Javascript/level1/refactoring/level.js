@@ -38,7 +38,8 @@ const accountListAdded = (List, Bank, Account, checkNumber) => {
   if (checkStringLength(Account, checkNumber)) {
     const newAccount = changeNewAccountNumber(
       getValueWithArrayIndex(BANK_LIST_ARRAY, Bank, ACCOUNT_FORM_ARRAY),
-      Account
+      Account,
+      2
     );
     List.push([Bank, newAccount]);
   } else {
@@ -52,14 +53,14 @@ const accountListAdded = (List, Bank, Account, checkNumber) => {
  * @param {String} prevString
  * @returns String
  */
-function changeNewAccountNumber(changeCharinListindex, prevString) {
+function changeNewAccountNumber(changeCharinListindex, prevString, dontChangeRange) {
   const newString = prevString
     .split("")
     .reduce((accumulator, current, index) => {
       if (findIndexAllinString(changeCharinListindex, "-").includes(accumulator.length)) {
         accumulator.push("-");
       }
-      if (index <= 1 || index >= 10) {
+      if (index < dontChangeRange || index >= prevString.length - dontChangeRange) {
         accumulator.push(current);
       } else {
         accumulator.push("*");
