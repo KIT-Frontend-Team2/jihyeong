@@ -11,7 +11,6 @@ console.log("비동기 요청 2")
 console.log("비동기 요청 3")
 를 결과값으로 출력한다
 
-
 2. 결과
 [콘솔창]
       ... 비동기 요청
@@ -22,7 +21,7 @@ console.log("비동기 요청 3")
       "비동기 요청 3"
       "정상적으로 실행되었습니다"
 
-      2. case errer(rejected)
+      2. case error(rejected)
       "결과값을 가지고 오는데 실패하였습니다"
 
 
@@ -40,3 +39,51 @@ console.log("비동기 요청 3")
       결과 값으로는 반드시 "정상적으로 실행되었습니다"가 출력되어야한다
       그러나, 3가지 요청이 모두 실패했을 때는 "결과값을 가지고 오는데 실패하였습니다"가 출력되어야한다.
 */
+
+const consoleLog1 = (number) =>
+  new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (number < 10) {
+        return resolve("비동기 요청 1");
+      } else reject("비동기 요청 1 호출 실패");
+    }, 3000);
+  });
+const consoleLog2 = (number) =>
+  new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (number < 1) {
+        return resolve("비동기 요청 2");
+      } else reject("비동기 요청 2 호출 실패");
+    }, 2000);
+  });
+const consoleLog3 = (number) =>
+  new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (number > 10) {
+        return resolve("비동기 요청 3");
+      } else reject("비동기 요청 3 호출 실패");
+    }, 1000);
+  });
+
+Promise.all([consoleLog1(10), consoleLog2(2), consoleLog3(5)]).catch(() => {
+  console.log("결과값을 가지고 오는데 실패하였습니다");
+});
+
+Promise.allSettled([consoleLog1(10), consoleLog2(2), consoleLog3(5)]).then((result) => {
+  let allFalse = true;
+  result.forEach((v) => {
+    if (v.status == "fulfilled") {
+      allFalse = false;
+      console.log(v.value);
+    }
+  });
+  if (!allFalse) {
+    result.forEach((v) => {
+      if (v.status == "rejected") {
+        console.log(v.reason);
+      }
+    });
+  } else {
+    console.log("결과값을 가지고 오는데 모두 실패하였습니다");
+  }
+});

@@ -16,7 +16,7 @@ async await을 통해 구현하고자 합니다.
 const promise1 = () =>
   new Promise((resolve) => {
     setTimeout(() => {
-      console.log('비동기1');
+      console.log("비동기1");
       resolve(1);
     }, 3000);
   });
@@ -24,7 +24,7 @@ const promise1 = () =>
 const promise2 = () =>
   new Promise((resolve) => {
     setTimeout(() => {
-      console.log('비동기2');
+      console.log("비동기2");
       resolve(2);
     }, 3000);
   });
@@ -32,7 +32,7 @@ const promise2 = () =>
 const promise3 = () =>
   new Promise((resolve) => {
     setTimeout(() => {
-      console.log('비동기3');
+      console.log("비동기3");
       resolve(3);
     }, 3000);
   });
@@ -40,3 +40,16 @@ const promise3 = () =>
 promise1().then((res) => {
   promise2().then(() => promise3());
 });
+
+const asyncHandler = async () => {
+  try {
+    const result1 = await promise1();
+    const result2 = await promise1(result1);
+    const result3 = await promise1(result2);
+    console.log(result3);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+asyncHandler();
