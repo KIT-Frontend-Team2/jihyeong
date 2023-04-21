@@ -301,6 +301,7 @@ const BtnAddEvent = () => {
 
 // 댓글을 등록해주는 함수
 function makeComment(writeList, 게시물) {
+  console.log(writeList);
   document.querySelector(".replies-list").innerHTML = commentRendering(writeList[게시물 - 1]);
 
   document.querySelector(".reply-input").addEventListener("submit", (e) => {
@@ -324,7 +325,7 @@ function makeComment(writeList, 게시물) {
 // 리스트를 만들어주는 함수
 function makeList(arr, 게시물번호) {
   const result = arr
-    .slice(게시물번호 - 1, 게시물번호)
+    .slice(now_page * 한페이지에보여줄갯수, (now_page + 1) * 한페이지에보여줄갯수)
     .map((item) => {
       const comment = commentRendering(item);
       return `
