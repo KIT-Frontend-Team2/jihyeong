@@ -23,6 +23,7 @@ const $title = $tableinner.innerHTML;
 // 해당 input내의 값이 변경될 때마다 target의 value를 업데이트 해준다.
 $input.forEach((v, i) =>
   v.addEventListener("change", (e) => {
+    console.log(e);
     $input[i].value = e.target.value;
   })
 );

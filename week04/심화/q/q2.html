@@ -4,39 +4,82 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://kit.fontawesome.com/3690ebf0f7.js" crossorigin="anonymous"></script>
     <script type="module" src="./q2.js"></script>
     <title>Q2</title>
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="post-list">
-      <!-- 본인의 게시글에만 보임 -->
-      <div>
-        <button>수정</button>
-        <button>삭제</button>
+    <header>
+      <div id="page-status">페이지 입니다.</div>
+      <button class="write-btn off">글쓰기</button>
+    </header>
+    <form action="" class="new post-list writing off">
+      <h3>게시글 등록하기</h3>
+      <label for="title">
+        <div class="title input">
+          <input type="text" id="title" />
+        </div>
+      </label>
+      <label for="content">
+        <div class="content input">
+          <input type="text" id="content" />
+        </div>
+      </label>
+      <div class="submit">
+        <button>취소</button>
+        <button>저장</button>
       </div>
-      <div class="post-card">
-        <h4 class="post-title">example-title</h4>
-        <div class="post-content">example-content</div>
+    </form>
+    <div id="page-list">
+      <div class="post-list">
+        <!-- 본인의 게시글에만 보임 -->
+        <div class="action-bar">
+          <button class="post-update">수정</button>
+          <button class="post-delete">삭제</button>
+        </div>
+        <div class="post-card">
+          <h4 class="post-title">제목</h4>
+          <div class="post-content">내용</div>
+        </div>
+        <button>댓글 보기</button>
+        <!-- 댓글 보기를 눌렀을 때만 아래 리스트를 볼 수 있습니다. -->
+        <ul class="replies-list">
+          <!-- 닫기 버튼을 누르면 토글이 닫힙니다 -->
+          <button>닫기</button>
+          <li class="reply-item">
+            <div class="reply-user-info">
+              <img src="#" />
+              <p>userName</p>
+            </div>
+            <div class="reply-content">content</div>
+            <div class="reply-date">2022.02.10</div>
+            <!-- 본인의 게시글에만 보임 -->
+            <div>
+              <button>수정</button>
+              <button>삭제</button>
+            </div>
+          </li>
+        </ul>
       </div>
-      <button>댓글 보기</button>
-      <!-- 댓글 보기를 눌렀을 때만 아래 리스트를 볼 수 있습니다. -->
-      <ul class="replies-list">
-        <!-- 닫기 버튼을 누르면 토글이 닫힙니다 -->
-        <button>닫기</button>
-        <li class="reply-item">
-          <div class="reply-user-info">
-            <img src="#" />
-            <p>kim seong-yong</p>
-          </div>
-          <div class="reply-content">content</div>
-          <div class="reply-date">2022.02.10</div>
-          <!-- 본인의 게시글에만 보임 -->
-          <div>
-            <button>수정</button>
-            <button>삭제</button>
-          </div>
-        </li>
-      </ul>
     </div>
+    <footer>
+      <div id="pagination">
+        <button id="first">
+          <i class="fa-solid fa-angles-left"></i>
+        </button>
+        <button id="prev">
+          <i class="fa-solid fa-angle-left"></i>
+        </button>
+        <ul id="select-page"></ul>
+        <button id="next">
+          <i class="fa-solid fa-angle-right"></i>
+        </button>
+        <button id="last">
+          <i class="fa-solid fa-angles-right"></i>
+        </button>
+      </div>
+    </footer>
   </body>
 </html>
