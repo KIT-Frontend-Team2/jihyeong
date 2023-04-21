@@ -59,7 +59,7 @@ MockPosts를 함수를 활용하여 새로운 10개의 랜덤한 게시물을 �
 
 * 주의)
 백엔드가 존재하지 않기 때문에 파일 업로드 기능을 구현할 수 없기에 사진을 업로드 할 수 없습니다.
-따라서 게시글 추가 시 올라가는 이미지의 속성인 Post_img의 경우 빈배열로 두거나 빈 값으로 두시면 됩니다 :)
+따라서 게시글 addBtn 시 올라가는 이미지의 속성인 Post_img의 경우 빈배열로 두거나 빈 값으로 두시면 됩니다 :)
 
 게시글 작성과 댓글 작성 시 작성자의 프로필 이미지는 본인이 원하는 대체 이미지로 고정하여 대체 하시면 됩니다.
 
@@ -71,7 +71,18 @@ MockPosts를 함수를 활용하여 새로운 10개의 랜덤한 게시물을 �
 
 import { MockPosts } from "./faker.js";
 
-let writeList = MockPosts(200);
+let writeList = MockPosts(200).map((v, i) => {
+  return {
+    key: i,
+    ...v,
+    Comments: [
+      ...v.Comments.map((c) => ({
+        key: i,
+        ...c,
+      })),
+    ],
+  };
+});
 
 // 로그인 유무 확인
 const isLogin = true;
@@ -79,84 +90,107 @@ const isLogin = true;
 if (isLogin) {
   document.querySelector(".write-btn").classList.remove("off");
 }
-
+let isFirst = false;
 // 현재 로그인한 유저 정보
 const User = {
   id: 10000,
   nickName: "JiHyeong",
   profileImg: "IMG_6059.jpg",
 };
-
-const searchParams = new URLSearchParams(location.search);
-let postNumber = searchParams.get("selectPost");
-if (postNumber === null) {
-  postNumber = 1;
-}
-// 랜더링 되는 페이지
-const select_page = document.querySelector("#page-list");
-
-// 현재 고른 게시글
-const 게시물 = parseInt(postNumber);
-
+let page = 1;
 // 현재 페이지
-const now_page = Math.ceil(게시물 / 10) - 1;
+const searchParams = new URLSearchParams(location.search);
+const select_page = searchParams.get("selectPost");
+if (select_page === null) {
+  page = 1;
+} else {
+  page = parseInt(select_page);
+}
 
 // 게시글 갯수 설정
-const 보여줄게시글갯수 = 200;
+const 보여줄게시글갯수 = writeList.length;
 let totalItemCount = MockPosts(보여줄게시글갯수).length;
 
 // 한 페이지에 보여질 갯수 설정
 const 한페이지에보여줄갯수 = 10;
 
+// 장수
+const total = Math.ceil(page / 10);
 // 버튼 만들기
-let 버튼 = new Array(totalItemCount).fill("");
+let 버튼 = new Array(보여줄게시글갯수 / 한페이지에보여줄갯수).fill("");
 버튼 = 버튼.map((v, i, arr) => (arr[i] = i + 1));
 
 // 현재 페이지에 맞는 번호들만 보이기
-document.querySelector("#select-page").innerHTML = 버튼
-  .filter((index) => index > now_page * 10 && index <= (now_page + 1) * 10)
-  .map((index) => {
-    if (index === 게시물) {
-      return `<li class="select")><button>${index}</button></li>`;
-    } else {
-      return `<li onclick="location.href='q2.html?selectPost=${index}'")><button>${index}</button></li>`;
-    }
-  })
-  .join("");
-
+const renderingPage = () => {
+  document.querySelector("#select-page").innerHTML = 버튼
+    .filter((index) => (total - 1) * 10 < index && index <= total * 10)
+    .map((index) => {
+      if (page === index) {
+        return `<li class="select")><button>${index}</button></li>`;
+      } else {
+        return `<li onclick="location.href='q2.html?selectPost=${index}'")><button>${index}</button></li>`;
+      }
+    })
+    .join("");
+};
+renderingPage();
 // 현재 페이지 보여주기
-document.querySelector("#page-status").innerHTML = `${게시물} 번째 게시물입니다.`;
+document.querySelector("#page-status").innerHTML = `${total} 번째 페이지입니다.`;
 
 // 처음 페이지
 document.querySelector("#first").addEventListener("click", () => {
-  if (게시물 !== 1) {
+  if (total !== 1) {
     location.href = "q2.html?selectPost=1";
+    renderingPage();
   }
 });
 // 이전 페이지
 document.querySelector("#prev").addEventListener("click", () => {
-  if (게시물 !== 1) {
-    location.href = `q2.html?selectPost=${게시물 - 1}`;
+  if (total !== 1) {
+    location.href = `q2.html?selectPost=${index - 1}`;
+    renderingPage();
   }
 });
 
 // 다음 페이지
 document.querySelector("#next").addEventListener("click", () => {
-  location.href = `q2.html?selectPost=${게시물 + 1}`;
+  location.href = `q2.html?selectPost=${page + 1}`;
+  renderingPage();
 });
 // 마지막 페이지
 document.querySelector("#last").addEventListener("click", () => {
-  location.href = `q2.html?selectPost=${totalItemCount}`;
+  location.href = `q2.html?selectPost=${보여줄게시글갯수 / 한페이지에보여줄갯수}`;
+  renderingPage();
 });
 
-// 내가 작성한 글 목록
+// 페이지네이션 종료
 
-const $form = document.querySelector("form");
+// 현재 보여지는 페이지 전체
+const show_page = document.querySelector("#page-list");
+
+// 현재 페이지 렌더링
+function rendering(list) {
+  const new_lists = makeList(list, total);
+  isFirst = true;
+  show_page.innerHTML = new_lists;
+  BtnAddEvent();
+  addComment();
+}
+
+window.onload = () => {
+  rendering(writeList);
+};
+
+// 리스트 추가하기
+const $form = document.querySelector("form.new.post-list");
+
 $form.addEventListener("submit", (e) => {
   e.preventDefault();
-  const [추가, 취소] = document.querySelectorAll("form .submit button");
 
-  취소.addEventListener("click", (c) => {
+  const [addBtn, cancelBtn] = document.querySelectorAll("form .submit button");
+
+  // 만들어진 리스트에 데이터 추가하기
+  cancelBtn.addEventListener("click", (c) => {
     c.preventDefault();
     const new_title = e.target[0].value;
     const new_content = e.target[1].value;
@@ -179,14 +213,15 @@ $form.addEventListener("submit", (e) => {
       createdAt: new_date,
       myPost: true,
     });
-    rendering();
+
+    rendering(writeList);
 
     closeButton();
     e.target[0].value = "";
     e.target[1].value = "";
   });
 
-  추가.addEventListener("click", (c) => {
+  addBtn.addEventListener("click", (c) => {
     c.preventDefault();
     closeButton();
     e.target[0].value = "";
@@ -194,72 +229,23 @@ $form.addEventListener("submit", (e) => {
   });
 });
 
+// 추가하기 취소하기
 function closeButton() {
-  document.querySelector("form").classList.add("off");
+  $form.classList.add("off");
 }
 
-// 현재 페이지 렌더링
-const rendering = () => {
-  const new_lists = makeList(writeList, 게시물);
-
-  select_page.innerHTML = new_lists;
-
-  // 글 삭제하기
-  const deleteBTN = document.querySelectorAll(".post-delete");
-  deleteBTN.forEach((c) =>
-    c.addEventListener("click", (e) => {
-      const deleteId = parseInt(e.target.getAttribute("data-role"));
-      writeList = writeList.filter((v) => v.id !== deleteId);
-      rendering();
-    })
-  );
-
-  // 글 수정하기
-  const updateBTN = document.querySelectorAll(".post-update");
-  updateBTN.forEach((e) => {
-    e.addEventListener("click", (c) => {
-      const updateId = parseInt(c.target.getAttribute("data-role"));
-      alert("수정시 이전에 작성한 내용은 삭제됩니다.");
-      writeList = writeList.filter((v) => v.id !== updateId);
-      document.querySelector("form").classList.remove("off");
-    });
-  });
-
-  makeComment(writeList, 게시물);
-
-  BtnAddEvent();
-};
-const BtnAddEvent = () => {
-  const $replyOpenBtn = document.querySelectorAll(".repliesOn");
-  const $replyCloseBtn = document.querySelectorAll(".repliesOff");
-
-  $replyOpenBtn.forEach((item, i) =>
-    item.addEventListener("click", (e) => {
-      $replyOpenBtn[i].parentNode.classList.remove("off");
-      $replyOpenBtn[i].parentNode.classList.add("on");
-    })
-  );
-
-  $replyCloseBtn.forEach((item, i) =>
-    item.addEventListener("click", (e) => {
-      $replyCloseBtn[i].parentNode.classList.remove("on");
-      $replyCloseBtn[i].parentNode.classList.add("off");
-    })
-  );
-
-  document.querySelector(".write-btn").addEventListener("click", () => {
-    document.querySelectorAll("form")[0].classList.remove("off");
-  });
-
+const repliesBtnEvent = () => {
   const updatesBtn = document.querySelectorAll(".repliesUpdate");
-  updatesBtn.forEach((c) => {
+  updatesBtn.forEach((c, i) => {
     c.addEventListener("click", (e) => {
-      const 미리보기 = writeList[게시물 - 1].Comments.filter(
+      console.log(e);
+      const 미리보기 = writeList[(total - 1) * 10 + i].Comments.filter(
         (e) => e.id === parseInt(c.parentElement.getAttribute("data-role"))
       );
+      console.log(미리보기);
       e.target.parentNode.parentNode.parentNode.innerHTML = `<div>
-      <div class="updateMsgBox">
-      <input type='text' id='updateMsg' value='${미리보기[0].content}'>
+        <div class="updateMsgBox">
+        <input type='text' id='updateMsg' value='${미리보기[0].content}'>
       </div>
       <div class="updateBtnBox">
       <button class='update-cancel'>취소</button>
@@ -268,19 +254,22 @@ const BtnAddEvent = () => {
       </div>`;
 
       const updatesBtn = document.querySelectorAll(".update-clear");
-      updatesBtn.forEach((v) => {
+      updatesBtn.forEach((v, i) => {
         v.addEventListener("click", (e) => {
-          let changTarget = writeList[게시물 - 1].Comments.find(
+          console.log((total - 1) * 10 + i);
+          let changTarget = writeList[(total - 1) * 10 + i].Comments.find(
             (e) => e.id === parseInt(c.parentElement.getAttribute("data-role"))
           );
+          console.log(changTarget);
           changTarget.content = document.querySelector("#updateMsg").value;
-          makeComment(writeList, 게시물);
+          makeComment(i);
           BtnAddEvent();
         });
       });
 
       document.querySelector(".update-cancel").addEventListener("click", () => {
-        makeComment(writeList, 게시물);
+        console.log("283");
+        makeComment(i);
         BtnAddEvent();
       });
     });
@@ -288,46 +277,116 @@ const BtnAddEvent = () => {
 
   const deleteBtn = document.querySelectorAll(".repliesDelete");
 
-  deleteBtn.forEach((e) => {
+  deleteBtn.forEach((e, i) => {
     e.addEventListener("click", () => {
-      writeList[게시물 - 1].Comments = writeList[게시물 - 1].Comments.filter(
+      console.log("294");
+      writeList[(total - 1) * 10 + i].Comments = writeList[(total - 1) * 10 + i].Comments.filter(
         (c) => c.id !== parseInt(e.parentElement.getAttribute("data-role"))
       );
-      makeComment(writeList, 게시물);
+      makeComment(i);
       BtnAddEvent();
     });
   });
 };
 
-// 댓글을 등록해주는 함수
-function makeComment(writeList, 게시물) {
-  console.log(writeList);
-  document.querySelector(".replies-list").innerHTML = commentRendering(writeList[게시물 - 1]);
+// 새롭게 만들어진 버튼들에게 이벤트를 부여하는 함수
+function BtnAddEvent() {
+  // 리스트 추가하기 버튼을 보이게 하기
 
-  document.querySelector(".reply-input").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const new_comment_User = User;
-    const new_comment_content = e.target[0].value;
-    const new_comment_createAt = new Date();
-    const new_comment_id = Math.floor(Math.random() * 100000);
-    writeList[게시물 - 1].Comments.push({
-      User: new_comment_User,
-      content: new_comment_content,
-      createdAt: new_comment_createAt,
-      id: new_comment_id,
-      myComment: true,
-    });
-    makeComment(writeList, 게시물);
-    BtnAddEvent();
+  const $writeBtn = document.querySelector(".write-btn");
+  $writeBtn.addEventListener("click", () => {
+    $form.classList.remove("off");
   });
+
+  // 댓글 보이게하기
+  const $replyOpenBtn = document.querySelectorAll(".repliesOn");
+  $replyOpenBtn.forEach((item, i) =>
+    item.addEventListener("click", (e) => {
+      console.log("238");
+      $replyOpenBtn[i].parentNode.classList.remove("off");
+      $replyOpenBtn[i].parentNode.classList.add("on");
+    })
+  );
+
+  // 댓글 안보이게하기
+  const $replyCloseBtn = document.querySelectorAll(".repliesOff");
+  $replyCloseBtn.forEach((item, i) =>
+    item.addEventListener("click", () => {
+      console.log("249");
+      $replyCloseBtn[i].parentNode.classList.remove("on");
+      $replyCloseBtn[i].parentNode.classList.add("off");
+    })
+  );
+
+  // 글 삭제하기
+  const deleteBTN = document.querySelectorAll(".post-delete");
+  deleteBTN.forEach((c) =>
+    c.addEventListener("click", (e) => {
+      const deleteId = parseInt(e.target.getAttribute("data-role"));
+      writeList = writeList.filter((v) => v.id !== deleteId);
+      rendering(writeList);
+    })
+  );
+
+  // 글 수정하기
+  const updateBTN = document.querySelectorAll(".post-update");
+  console.log(updateBTN);
+  updateBTN.forEach((e) => {
+    e.addEventListener("click", (c) => {
+      console.log("316");
+      const updateId = parseInt(c.target.getAttribute("data-role"));
+      console.log(updateId);
+      alert("수정시 이전에 작성한 내용은 삭제됩니다.");
+      writeList = writeList.filter((v) => v.id !== updateId);
+      document.querySelector("form").classList.remove("off");
+    });
+  });
+  repliesBtnEvent();
 }
 
+// 댓글을 객체에 등록해주기
+const addComment = () => {
+  const $input_text = document.querySelectorAll(".reply-input");
+  $input_text.forEach((item, i) => {
+    item.addEventListener("submit", (c) => {
+      c.preventDefault();
+      const new_comment_User = User;
+      const new_comment_content = c.target[0].value;
+      const new_comment_createAt = new Date();
+      const new_comment_id = Math.floor(Math.random() * 100000);
+      let list = {
+        key: i,
+        User: new_comment_User,
+        content: new_comment_content,
+        createdAt: new_comment_createAt,
+        id: new_comment_id,
+        myComment: true,
+      };
+      writeList[(total - 1) * 10 + i].Comments.push(list);
+      list = {};
+      c.target[0].value = "";
+      makeComment(i);
+      addComment();
+    });
+  });
+};
+
+// 댓글 생성해주는 함수
+const makeComment = (index) => {
+  const $repliesList = document.querySelectorAll(".comment-box");
+  $repliesList[index].innerHTML = commentRendering(writeList[(total - 1) * 10 + index].Comments);
+  console.log(writeList[(total - 1) * 10 + index].Comments);
+  repliesBtnEvent();
+};
+
 // 리스트를 만들어주는 함수
-function makeList(arr, 게시물번호) {
+function makeList(arr, total) {
+  const render_total_number = total - 1;
+  console.log(arr);
   const result = arr
-    .slice(now_page * 한페이지에보여줄갯수, (now_page + 1) * 한페이지에보여줄갯수)
+    .slice(render_total_number * 10, (render_total_number + 1) * 10)
     .map((item) => {
-      const comment = commentRendering(item);
+      const comment = commentRendering(item.Comments);
       return `
       <div class="post-list">
       <div class="action-bar">
@@ -351,63 +410,65 @@ function makeList(arr, 게시물번호) {
         ${item.content}
         </div>
       </div>
-       <ul class ="replies-list off">
-       ${comment}
-       </ul>
-    </div>`;
+        <div class="comment-box">
+        ${comment}
+        </div>
+      </div>`;
     })
     .join("");
-
+  isFirst = true;
   return result;
 }
 
+// 댓글을 만들어주는 함수
 function commentRendering(arr) {
-  const comment = arr.Comments.map((comments) => {
-    const writerDate = new Date(comments.createdAt);
-    const writerTime = `${writerDate.getFullYear()}.${writerDate.getMonth() + 1}.${
-      writerDate.getDate() + 1
-    }. ${writerDate.getHours()}:${writerDate.getMinutes()}`;
-    return `
-    <li class="reply-item">
-    <div class="reply-user-info">
-    <img src="${comments.User.profileImg}"  width='50px'  height='50px'/>
-    <div class="reply-user-inner">
-    <div>${comments.User.nickName}</div>
+  const comment = arr
+    .map((comments) => {
+      const writerDate = new Date(comments.createdAt);
+      const writerTime = `${writerDate.getFullYear()}.${writerDate.getMonth() + 1}.${
+        writerDate.getDate() + 1
+      }. ${writerDate.getHours()}:${writerDate.getMinutes()}`;
+      return `
+      <li class="reply-item">
+        <div class="reply-user-info">
+          <img src="${comments.User.profileImg}"  width='50px'  height='50px'/>
+          <div class="reply-user-inner">
+            <div>${comments.User.nickName}</div>
             <div class="reply-content">${comments.content}</div>
+          </div>
         </div>
-      </div>
-      <div class="reply-footer">
+        <div class="reply-footer">
           <div class="reply-date">${writerTime}</div>
           <div data-role='${comments.id}'>
-          ${
-            User.id === comments.User.id
-              ? `
-          <button class="repliesUpdate">수정</button>
-          <button class="repliesDelete">삭제</button>
-          `
-              : ""
-          }
+            ${
+              User.id === comments.User.id
+                ? `<button class="repliesUpdate">수정</button><button class="repliesDelete">삭제</button>`
+                : ""
+            }
           </div>
-          </div>
-          </li>
-          `;
-  }).join("");
-
-  const reply = `
-    <button class="repliesOn">댓글 보기</button>
-    <button class="repliesOff">닫기</button>${comment}
-    <form class="reply-input">
-      <label for='reply-input-box'>
-      <div class="reply-text-box">
-        <input type="text" id='reply-input-box'/>
-        <div class="reply-submit">
-          <button>등록</button>
         </div>
-      </div>
-      </label>
-    </form>
+      </li>
+       `;
+    })
+    .join("");
+
+  const randomKey = Math.floor(Math.random() * 100000);
+  const reply = `
+    <ul class="replies-list on">
+      <button class="repliesOn">댓글 보기</button>
+      <button class="repliesOff">닫기</button>
+      ${comment}
+      <form class="reply-input">
+        <label for='reply-input-box${randomKey}'>
+        <div class="reply-text-box">
+          <input type="text" id='reply-input-box${randomKey}'/>
+          <div class="reply-submit">
+            <button>등록</button>
+          </div>
+        </div>
+        </label>
+      </form>
+    </ul>
 `;
   return reply;
 }
-
-rendering();

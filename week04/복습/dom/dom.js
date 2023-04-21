@@ -1,31 +1,53 @@
 const users = [
   {
     id: 1,
-    name: '김사과',
+    name: "김사과",
     age: 20,
     height: 190,
   },
   {
     id: 2,
-    name: '이수박',
+    name: "이수박",
     age: 32,
     height: 185,
   },
   {
     id: 3,
-    name: '오렌지',
+    name: "오렌지",
     age: 20,
     height: 180,
   },
   {
     id: 4,
-    name: '이멜론',
+    name: "이멜론",
     age: 28,
     height: 175,
   },
 ];
 
-const $info = document.querySelector('#info');
+const new_user = users.map((el) => {
+  const result = el.id;
+
+  // 3
+  if (el.id === 3) {
+    return result; // 안내인
+  }
+});
+
+users.filter((el) => {
+  if (el.id === 3) {
+    return el;
+  }
+});
+
+users.filter((el) => el.id === 3);
+
+// 1, 2, 3, 4
+// map 배열을 한번씩 전부 순회를 합니다.
+// [[result],[result],[result],[result]]
+// [[undefined],[undefined],[3],[undefined]]
+
+const $info = document.querySelector("#info");
 $info.innerHTML = `
     <div>${users[0].name}</div>
     <div>${users[0].age}</div>

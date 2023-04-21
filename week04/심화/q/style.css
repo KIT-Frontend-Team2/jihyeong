@@ -274,5 +274,4 @@ form .input {
 .updateBtnBox {
   display: flex;
   flex-direction: row-reverse;
-  gap: 10px;
 }
