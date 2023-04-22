@@ -275,3 +275,7 @@ form .input {
   display: flex;
   flex-direction: row-reverse;
 }
+
+.reply-footer div button {
+  margin-right: 10px;
+}
