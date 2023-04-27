@@ -366,6 +366,7 @@ function BtnAddEvent() {
 // 리스트를 만들어주는 함수
 function makeList(arr, page) {
   const render_total_number = page - 1;
+  console.log(arr.slice(render_total_number * 10, (render_total_number + 1) * 10));
   const result = arr
     .slice(render_total_number * 10, (render_total_number + 1) * 10)
     .map((item, i) => {
