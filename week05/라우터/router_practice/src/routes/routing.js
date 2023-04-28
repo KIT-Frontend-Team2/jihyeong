@@ -6,6 +6,7 @@ import ComicList from "../pages/webtoon";
 import MyPage from "../pages/myPage";
 import Create from "../pages/creators";
 import DetailWebtoon from "../pages/webtoon/detail";
+import ErrorPage from "../pages/errorPage";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
   },
   { path: "/creators", element: <Create /> },
   { path: "/webtoon/detail/", element: <DetailWebtoon /> },
+  { path: "/*", element: <ErrorPage /> },
 ]);
 
 export default router;
