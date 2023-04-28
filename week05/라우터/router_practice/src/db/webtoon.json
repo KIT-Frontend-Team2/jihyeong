@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1,
+    "name": "1초",
+    "imgUrl": "./assets/img/thumbnail_IMAG21_17f81846-d1a9-43fd-83a4-f9e966b6b977.jpg"
+  },
+  {
+    "id": 2,
+    "name": "재혼황후",
+    "imgUrl": "./assets/img/thumbnail_IMAG21_4b3c44a0-f286-4878-bac3-84c3ec9dc0a1.jpg"
+  },
+  {
+    "id": 3,
+    "name": "나혼자만렙뉴비",
+    "imgUrl": "./assets/img/thumbnail_IMAG21_74f87a34-cf6d-4838-8a80-768bdb2f78a9.jpg"
+  },
+  {
+    "id": 4,
+    "name": "외모지상주의",
+    "imgUrl": "./assets/img/thumbnail_IMAG21_01672165-03c8-44b1-ba0e-ef82c9cfcd10.jpg"
+  },
+  {
+    "id": 5,
+    "name": "어쩌다보니 천생연분",
+    "imgUrl": "./assets/img/thumbnail_IMAG21_3545003845982959922.jpg"
+  },
+  {
+    "id": 6,
+    "name": "대학원 탈출일지",
+    "imgUrl": "./assets/img/thumbnail_IMAG21_3919364435331003700.jpg"
+  },
+  {
+    "id": 7,
+    "name": "데드퀸",
+    "imgUrl": "./assets/img/thumbnail_IMAG21_4049077133597095219.jpg"
+  },
+  {
+    "id": 8,
+    "name": "개를 낳았다",
+    "imgUrl": "./assets/img/thumbnail_IMAG21_7220173143199539507.jpg"
+  },
+  {
+    "id": 9,
+    "name": "언니 이번생엔 내가 왕비야",
+    "imgUrl": "./assets/img/thumbnail_IMAG21_ca84bfa2-c1c8-4621-9b4b-26dc745606f5.jpg"
+  },
+  {
+    "id": 10,
+    "name": "역대급 영지 설계사",
+    "imgUrl": "./assets/img/thumbnail_IMAG21_cc85f891-272b-450a-b642-cffe1568ab71.jpg"
+  }]
