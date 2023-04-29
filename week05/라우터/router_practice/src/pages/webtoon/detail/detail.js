@@ -1,13 +1,12 @@
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import Header from "../main/header";
-import data from "../../db/webtoon.json";
-import uuid from "react-uuid";
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import data from '../../../db/webtoon.json';
+import uuid from 'react-uuid';
 
 const DetailWebtoon = () => {
   const navigate = useNavigate();
   // const result = useParams();
   const [searchParams, setSearchParmas] = useSearchParams();
-  const result = parseInt(searchParams.get("comicId"));
+  const result = parseInt(searchParams.get('comicId'));
   const selectData = data.filter((data) => data.id === parseInt(result));
   const prevHandling = () => {
     if (parseInt(result) !== 1) {
@@ -29,20 +28,19 @@ const DetailWebtoon = () => {
   };
   const styled = {
     button: {
-      color: "white",
-      fontSize: "13px",
-      backgroundColor: "black",
-      width: "80px",
-      padding: "10px",
+      color: 'white',
+      fontSize: '13px',
+      backgroundColor: 'black',
+      width: '80px',
+      padding: '10px',
     },
   };
 
   return (
     <div>
-      <Header></Header>
       <div className="flex justify-center p-3">
         {selectData.map((data) => {
-          data.imgUrl = "../" + data.imgUrl;
+          data.imgUrl = '../' + data.imgUrl;
           return (
             <div key={uuid()}>
               <img src={data.imgUrl} alt={data.name} />
