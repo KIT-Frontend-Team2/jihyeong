@@ -6,8 +6,11 @@ const DetailWebtoon = () => {
   const navigate = useNavigate();
   // const result = useParams();
   const [searchParams, setSearchParmas] = useSearchParams();
+
   const result = parseInt(searchParams.get('comicId'));
+
   const selectData = data.filter((data) => data.id === parseInt(result));
+
   const prevHandling = () => {
     if (parseInt(result) !== 1) {
       setSearchParmas({ comicId: result - 1 });
@@ -15,6 +18,7 @@ const DetailWebtoon = () => {
       setSearchParmas({ comicId: data.length });
     }
   };
+
   const nextHandling = () => {
     if (parseInt(result) !== data.length) {
       setSearchParmas({ comicId: result + 1 });
@@ -22,10 +26,12 @@ const DetailWebtoon = () => {
       setSearchParmas({ comicId: 1 });
     }
   };
+
   const mainMove = () => {
     const url = `/webtoon`;
     navigate(url);
   };
+
   const styled = {
     button: {
       color: 'white',
@@ -43,7 +49,10 @@ const DetailWebtoon = () => {
           data.imgUrl = '../' + data.imgUrl;
           return (
             <div key={uuid()}>
-              <img src={data.imgUrl} alt={data.name} />
+              <div className="w-96">
+                <img src={data.imgUrl} alt={data.name} />
+                <span>{data.introduction}</span>
+              </div>
               <div className="flex justify-between pt-2">
                 <button style={styled.button} className="p-3 border-gray-500">
                   <span onClick={prevHandling}>이전 작품</span>

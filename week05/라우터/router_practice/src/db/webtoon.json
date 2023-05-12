@@ -2,50 +2,60 @@
   {
     "id": 1,
     "name": "1초",
-    "imgUrl": "./assets/img/thumbnail_IMAG21_17f81846-d1a9-43fd-83a4-f9e966b6b977.jpg"
+    "imgUrl": "./assets/img/thumbnail_IMAG21_17f81846-d1a9-43fd-83a4-f9e966b6b977.jpg",
+    "introduction" : "구조율 100%의 전설적인 소방관. 그의 특별한 능력은 긴장하는 순간, 미래가 보인다는 것! 촌각을 다투는 진짜 소방관들의 이야기"
   },
   {
     "id": 2,
     "name": "재혼황후",
-    "imgUrl": "./assets/img/thumbnail_IMAG21_4b3c44a0-f286-4878-bac3-84c3ec9dc0a1.jpg"
+    "imgUrl": "./assets/img/thumbnail_IMAG21_4b3c44a0-f286-4878-bac3-84c3ec9dc0a1.jpg",
+    "introduction" : "동대제국의 완벽한 황후였던 나비에. ​황제인 남편이 정부를 황후로 만들려는 것을 알고 이혼을 택한다. 그리고 결심한다. 이곳에서 황후가 될 수 없다면 다른 곳에서 황후가 되겠다고. 인기 웹소설 '재혼 황후'가 웹툰화되다!"
   },
   {
     "id": 3,
     "name": "나혼자만렙뉴비",
-    "imgUrl": "./assets/img/thumbnail_IMAG21_74f87a34-cf6d-4838-8a80-768bdb2f78a9.jpg"
+    "imgUrl": "./assets/img/thumbnail_IMAG21_74f87a34-cf6d-4838-8a80-768bdb2f78a9.jpg",
+    "introduction" : "게임 너튜버로 활동 중인 주인공 진혁은 유일하게 [시련의 탑]의 엔딩을 봤지만, 게임의 인기가 하락하며 더 이상 게임 너튜버로서의 삶도 유지하기 힘들어진다. 엔딩을 보았기에 이대로 게임을 마무리하려는 진혁. 바로 그날, [시련의 탑]은 현실이 되었다."
   },
   {
     "id": 4,
     "name": "외모지상주의",
-    "imgUrl": "./assets/img/thumbnail_IMAG21_01672165-03c8-44b1-ba0e-ef82c9cfcd10.jpg"
+    "imgUrl": "./assets/img/thumbnail_IMAG21_01672165-03c8-44b1-ba0e-ef82c9cfcd10.jpg",
+    "introduction" : "못생기고 뚱뚱하다고 괴롭힘을 당하며 루저 인생만 살아온 내가 잘생겨졌다는 이유로 인싸가 됐다. 어느 날 자고 일어났더니 갑자기 완벽한 외모와 몸을 지닌 사람이 되어 깨어난다면?"
   },
   {
     "id": 5,
     "name": "어쩌다보니 천생연분",
-    "imgUrl": "./assets/img/thumbnail_IMAG21_3545003845982959922.jpg"
+    "imgUrl": "./assets/img/thumbnail_IMAG21_3545003845982959922.jpg",
+    "introduction" : "집에 얹혀산 지 몇 년 차더라..? 올해 32살을 맞이한 한지아(일하지 않는 프리랜서/무직)는 주변의 결혼하라는 눈칫밥에 오늘도 고통받는데.. 때마침 명절을 맞이하여 고향에 내려온 소꿉친구 민철 또한 같은 고민이 있었으니. 그러면 쉬운 해결 방법이 있잖아?!? 그렇게 홧김에 결혼한 두 사람. 그런데 막상 결혼해 보니... 어라?? 생각보다 너무 잘 맞는다?!"
   },
   {
     "id": 6,
     "name": "대학원 탈출일지",
-    "imgUrl": "./assets/img/thumbnail_IMAG21_3919364435331003700.jpg"
+    "imgUrl": "./assets/img/thumbnail_IMAG21_3919364435331003700.jpg",
+    "introduction" :"연구에 꿈을 가지고 대학원을 선택한 병아리 요다.예상과는 다르게 연구에 관심 없는 교수님과똥군기의 연구실 분위기에 당황한다. 요다는 과연 무사히 대학원을 탈출할 수 있을 것인가?!"
   },
   {
     "id": 7,
     "name": "데드퀸",
-    "imgUrl": "./assets/img/thumbnail_IMAG21_4049077133597095219.jpg"
+    "imgUrl": "./assets/img/thumbnail_IMAG21_4049077133597095219.jpg",
+    "introduction" : "절망에 빠져 죽음이 임박했을때, 진짜 여왕이 재림한다! 하이브 세계관의 장대한 끝, 데드퀸"
   },
   {
     "id": 8,
     "name": "개를 낳았다",
-    "imgUrl": "./assets/img/thumbnail_IMAG21_7220173143199539507.jpg"
+    "imgUrl": "./assets/img/thumbnail_IMAG21_7220173143199539507.jpg",
+    "introduction" : "사랑스러운 너와의 첫 만남부터 이별까지. 처음으로 반려견을 키우게 된 다나와 모든것이 처음인 강아지 명동이가 만나 함께 살아가는 이야기. 강아지 수명 20년. 너와 내가 함께하는 20년 동안 우린 어떤 일을 겪게 될까?"
   },
   {
     "id": 9,
     "name": "언니 이번생엔 내가 왕비야",
-    "imgUrl": "./assets/img/thumbnail_IMAG21_ca84bfa2-c1c8-4621-9b4b-26dc745606f5.jpg"
+    "imgUrl": "./assets/img/thumbnail_IMAG21_ca84bfa2-c1c8-4621-9b4b-26dc745606f5.jpg",
+    "introduction" : "약혼자, 언니, 부모. 모든 것으로부터 버려진 그 날, 아리아드네는 14년 전으로 회귀한다. “젠장! 나는 지금 너에게 구애하는 거라고!” 태도가 완전히 달라진 전생의 약혼자부터, “울지 마, 아리아드네. 너는 네가 얼마나 예쁜지 모르지?” 그녀에게 첫눈에 반한 다정한 왕자님까지. 이번에야말로 모두에게 복수하고, 왕비가 되리라."
   },
   {
     "id": 10,
     "name": "역대급 영지 설계사",
-    "imgUrl": "./assets/img/thumbnail_IMAG21_cc85f891-272b-450a-b642-cffe1568ab71.jpg"
+    "imgUrl": "./assets/img/thumbnail_IMAG21_cc85f891-272b-450a-b642-cffe1568ab71.jpg",
+    "introduction" : "소설 속 귀족이 된 토목공학도 김수호. 그런데 뭐? 내 영지가 곧 망할 거라고? 그럼 살려야지. 설계하고, 건설하고, 분양해서. [전 대륙이 기다려온 특별한 기회! 퍼펙트한 교통, 최상의 학군, 쾌적한 숲세권, 원스톱 프리미엄 영지 라이프의 프론테라 남작령이 여러분을 기다립니다. 선착순 분양계약중!]"
   }]

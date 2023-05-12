@@ -10,6 +10,7 @@ import LayOut from '../components/Layout';
 import DetailWebtoon from '../pages/webtoon/detail/detail';
 
 const router = createBrowserRouter([
+  { path: '/*', element: <ErrorPage /> },
   {
     element: <LayOut />,
     children: [
@@ -37,7 +38,6 @@ const router = createBrowserRouter([
       { path: '/webtoon/detail/', element: <DetailWebtoon /> },
     ],
   },
-  { path: '/*', element: <ErrorPage /> },
 ]);
 
 export default router;
