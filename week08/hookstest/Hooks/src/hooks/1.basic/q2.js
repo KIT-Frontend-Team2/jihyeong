@@ -33,18 +33,20 @@ function Q2() {
         따라서 useRef는 사용하여 해당 문구의 색상을 변경해보세요 :)
   */
 
-  const inputRef = useRef();
-  const changRef = useRef();
   const arr = [];
-  const [arrData, setArrData] = useState([]);
+  const changRef = useRef();
+  const inputRef = useRef();
+  const listRef = useRef(arr);
   const [forceRender, setForceRender] = useState(false);
+  const randomColor = () => {
+    return Math.floor(Math.random() * 255);
+  };
 
   const onAddList = () => {
     setForceRender((prev) => !prev);
-    setArrData((prev) => [...prev, [inputRef.current.value]]);
-    arr.push(inputRef.current.value);
+    listRef.current.push(inputRef.current.value);
+    inputRef.current.value = '';
   };
-  console.log(arr);
   return (
     <>
       <h1>문제2</h1>
@@ -60,11 +62,11 @@ function Q2() {
           <button>제출</button>
         </p>
 
-        {arrData.length === 0 ? (
+        {listRef.current.length === 0 ? (
           <p>제출된 목록이 없습니다</p>
         ) : (
           <ul>
-            {arrData.map((prev) => (
+            {listRef.current.map((prev) => (
               <li>{prev}</li>
             ))}
           </ul>
@@ -75,9 +77,7 @@ function Q2() {
         <p ref={changRef}> 이 문구는 아래 버튼을 누르면 색상이 바뀝니다</p>
         <button
           onClick={() => {
-            changRef.current.style.color = `rgb(${Math.floor(Math.random() * 255)},${Math.floor(
-              Math.random() * 255
-            )},${Math.floor(Math.random() * 255)})`;
+            changRef.current.style.color = `rgb(${randomColor()},${randomColor()},${randomColor()})`;
           }}
         >
           변경

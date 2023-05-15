@@ -24,7 +24,7 @@ function State1() {
       <ul>
         {/* list */}
         {/* 예시 데이터입니다 */}
-        {/* {playList.map((prev) => {
+        {playList.map((prev) => {
           return (
             <li>
               <h3>{prev.title}</h3>
@@ -40,7 +40,7 @@ function State1() {
               </button>
             </li>
           );
-        })} */}
+        })}
       </ul>
       <div>
         <p>
