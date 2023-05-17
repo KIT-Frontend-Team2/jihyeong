@@ -3,18 +3,6 @@ import styled from 'styled-components';
 import Comment from '../../components/2.state/comment';
 
 function State2() {
-  /*  
-    문제 2.
-
-    Q1. 아래 작성된 state의 mock data를 활용하여
-        댓글 목록을 화면에 랜더링 해보세요 :)
-        Components는 src/components/state/comment.js를 활용하세요
-        
-    Q2. 댓글 작성 수정 삭제 기능을 구현해보세요 :)
-            1. 댓글 작성 기능
-            2. 댓글 수정 기능
-            3. 댓글 삭제 기능 ( 본인이 작성한 댓글만 삭제할 수 있습니다, myComment 활용 )
-    */
   const targetRef = useRef({
     User: {
       nickname: '',
@@ -115,7 +103,6 @@ function State2() {
         </form>
       </div>
       <S.CommentList>
-        {/* list */}
         {post.Comments.map((comment, index) => (
           <Comment
             key={index}
@@ -130,6 +117,12 @@ function State2() {
     </S.Wrapper>
   );
 }
+/**
+ *
+ * 기존 코드와 달라진 점
+ * 1. 기존에 입력했던 내용이 수정버튼을 눌렀을 때 기본값으로 들어가게 수정하였습니다.
+ *
+ */
 export default State2;
 
 const Wrapper = styled.div`

@@ -15,7 +15,7 @@ function Comment(props) {
           댓글 내용: <span>{content}</span>
         </p>
       ) : (
-        <input ref={newRef} placeholder={content} />
+        <input ref={newRef} defaultValue={content} />
       )}
       {myComment && (
         <>

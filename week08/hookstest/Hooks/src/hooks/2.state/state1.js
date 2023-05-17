@@ -2,17 +2,6 @@ import { useState } from 'react';
 import PlayListMock from '../../__mock__/playList.json';
 
 function State1() {
-  /* 
-    문제 1.
-
-    state를 다루기 위한 기초 문제입니다.
-    음악 목록 10가지의 mock data가 있습니다.
-
-    아래에 추가버튼을 눌러 목록에 리스트를 추가하고 
-    삭제 버턴을 눌렀을 때 데이터가 삭제될 수 있도록 해주세요
-  */
-
-  /* 데이터 콘솔에 찍어두었으니 확인해볼 것 */
   const [playList, setPlayList] = useState(PlayListMock.playlist);
   const [makeSong, SetMakeSong] = useState({
     title: '',
@@ -22,8 +11,6 @@ function State1() {
     <>
       <h1>문제1</h1>
       <ul>
-        {/* list */}
-        {/* 예시 데이터입니다 */}
         {playList.map((prev) => {
           return (
             <li>
@@ -62,7 +49,18 @@ function State1() {
         <p>
           <button
             onClick={() => {
-              setPlayList((prev) => [...prev, makeSong]);
+              setPlayList((prev) => {
+                if (
+                  playList.filter(
+                    (data) => data.signer === makeSong.signer && data.title === makeSong.title
+                  ).length > 0
+                ) {
+                  alert('중복된 노래가 있습니다.');
+                  return [...prev];
+                }
+
+                return [...prev, makeSong];
+              });
             }}
           >
             추가
@@ -72,4 +70,10 @@ function State1() {
     </>
   );
 }
+/**
+ *
+ * 기존 코드와 달라진 점
+ * 1. 동일한 이름의 곡명과 가수일경우 추가가 되지 않게 바꾸었습니다.
+ *
+ */
 export default State1;

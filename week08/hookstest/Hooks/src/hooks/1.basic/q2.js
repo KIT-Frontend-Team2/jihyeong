@@ -1,51 +1,47 @@
 import { useRef, useState } from 'react';
 
 function Q2() {
-  /* 
-    문제2
-
-    2-1)
-        useRef에 관련한 문제입니다.
-
-        추가 버튼을 누르면 input에 있던 value는 배열 arr에 추가됩니다.
-        그러나, 추가 버튼을 누를 때마다 강제 랜더링 상태가 무조건 적으로 업데이트 됩니다.
-
-        이러한 상황에서 제출버튼을 누르면
-
-        지금까지 추가하였던 목록 배열(arr)이 
-        <ul>의 li의 항목으로 추가되어야합니다.
-
-        만약 제출되었을 때 아무런 항목이 없다면
-        <p>제출된 목록이 없습니다</p>이 노출되어야하며
-
-        제출된 항목이 있다면
-        <ul>만 노출되어야 합니다
-
-        이를 useRef의 특성을 고려하여 풀이해보세요 :)
-
-    2-2)
-        문제 2-2는 변경 버튼을 클릭하면
-        p태그의 색상이 다른 색상으로 변경됩니다.
-        
-        이는 state를 사용하는 것이 가장 올바른 방법이지만
-        어를 사용할 수 없는 어쩔 수 없는 상황에 놓여있습니다.
-
-        따라서 useRef는 사용하여 해당 문구의 색상을 변경해보세요 :)
-  */
-
-  const arr = [];
-  const changRef = useRef();
-  const inputRef = useRef();
-  const listRef = useRef(arr);
   const [forceRender, setForceRender] = useState(false);
+  const [input, setInput] = useState('');
+  const [hide, setHide] = useState(true);
+  const prevCount = useRef('');
+  const isSubmit = useRef(false);
+  const changRef = useRef();
+  // 추가가 됐는지 확인해주는 용도
+  const arr = [];
+  const SubmitList = useRef();
+  // 제출된 리스트
+  const List = useRef(arr);
+  // 제출이 안된 리스트 (기존의 arr[]을 기본값으로 받아줍니다.)
   const randomColor = () => {
     return Math.floor(Math.random() * 255);
   };
+  // const [hide,setHide] = useState(true) 제출버튼 눌렀을 때, 안눌렀을 때 useRef에서 제출된 리스트를 보여줄지 제출이 안된 리스트를 보여줄지
 
   const onAddList = () => {
+    if (input.trim() === '') return;
+    // 빈칸을 제거한 값이 아무것도 없을시 유효성 검사를 통해 아래 함수가 실행되지 않게 해줍니다.
+    if (isSubmit.current === false) {
+      // 기존에 누른적이 있다면 중복으로 누를수 없게 해줍니다.
+      setForceRender((prev) => !prev);
+      List.current.push(input);
+      isSubmit.current = true;
+      // 기존에 누른것을 확인할 수 있게 true로 바꿔줍니다.
+    }
+  };
+
+  const ChgInput = (e) => {
+    setInput(e.target.value);
+  };
+
+  const submitBtn = () => {
+    // useRef로 데이터를 이동시키기 때문에 데이터를 전송시켜주기 위해서 렌더링을 실시합니다.
+    console.log(prevCount.current);
     setForceRender((prev) => !prev);
-    listRef.current.push(inputRef.current.value);
-    inputRef.current.value = '';
+    prevCount.current = List.current.length;
+    SubmitList.current = [...List.current];
+    // 기존에 가지고있던 데이터들을 전개연산자를 통해 제출한 리스트에 옮겨줍니다.
+    isSubmit.current = false;
   };
   return (
     <>
@@ -53,23 +49,34 @@ function Q2() {
       <div>
         <h2>문제 2-1</h2>
         <p>
-          <input ref={inputRef} />
+          <input
+            onChange={(e) => {
+              ChgInput(e);
+            }}
+          />
         </p>
         <p>
           <button onClick={onAddList}>추가</button>
         </p>
         <p>
-          <button>제출</button>
+          <button onClick={submitBtn} disabled={prevCount.current === List.current.length}>
+            {/* 추가 버튼이 눌렀을 경우 (이전 배열과 크기가 달라졌을 경우에만 추가가 됩니다.) */}
+            제출
+          </button>
+          {/*
+            {hide ? (CopyArr.current===undefined ? null:CopyArr.current.map((v)=> {return <div>{v}</div>})):
+            List.current.length ===0 ? <div>제출할 목록이 없습니다</div>:
+            List.current.map((v)=>{return <div>{v}</div>})}
+          */}
+          {/* 제출 버튼을 처음 눌렀을 때 추가된 리스트가 있음에도 추가되지 않음을 해결하였습니다. */}
         </p>
-
-        {listRef.current.length === 0 ? (
-          <p>제출된 목록이 없습니다</p>
+        {SubmitList.current === undefined || SubmitList.current.length === 0 ? (
+          // 제출되어져있는 값이 없거나 또는 제출은 되었지만 빈 배열일경우 제출할 목록이 없다고 나오게 해줍니다.
+          <div>제출할 목록이 없습니다</div>
         ) : (
-          <ul>
-            {listRef.current.map((prev) => (
-              <li>{prev}</li>
-            ))}
-          </ul>
+          SubmitList.current.map((v) => {
+            return <div>{v}</div>;
+          })
         )}
       </div>
       <div>
@@ -86,4 +93,12 @@ function Q2() {
     </>
   );
 }
+
+/**
+ *
+ * 기존 코드와 달라진 점
+ * 1. 제출이 안됐을경우 버튼이 눌러지는 에러를 조치하였습니다.
+ * 2. 추가 버튼을 눌렀을 경우에만 제출이 활성화가 되게 조치하였습니다.
+ *
+ */
 export default Q2;
