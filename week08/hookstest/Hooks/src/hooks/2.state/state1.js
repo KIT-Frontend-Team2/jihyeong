@@ -54,6 +54,7 @@ function State1() {
                   playList.filter(
                     (data) => data.signer === makeSong.signer && data.title === makeSong.title
                   ).length > 0
+                  // 기존에 있던 데이터와 동일한 데이터가 있을시 데이터가 추가되지 않고 이전값을 반환합니다.
                 ) {
                   alert('중복된 노래가 있습니다.');
                   return [...prev];
