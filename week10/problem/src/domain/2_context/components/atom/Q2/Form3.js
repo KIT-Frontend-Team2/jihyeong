@@ -1,9 +1,18 @@
+import { useListProvider } from '../../../../../store/3_context';
+
 const ContextQ2Form3 = () => {
-  return (
-    <div>
-      <h1>Q2Form3</h1>
-      <button>RESET</button>
-    </div>
-  );
+    const [_, dispatch, Key] = useListProvider();
+    const onClick = () => {
+        dispatch({
+            type: Key.RESET,
+        });
+        console.log(Key.RESET);
+    };
+    return (
+        <div>
+            <h1>Q2Form3</h1>
+            <button onClick={onClick}>RESET</button>
+        </div>
+    );
 };
 export default ContextQ2Form3;
