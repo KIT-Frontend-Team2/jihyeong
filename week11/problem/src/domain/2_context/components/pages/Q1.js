@@ -20,11 +20,10 @@ const ContextQ1Page = () => {
     */
 
   // 위의 상태를 전역으로 관리하여 ContextQ1Detail, ContextQ1Detail2 두 컴포넌트의 보이기 버튼이 눌려도 모달창이 열릴 수 있도록 해주세요 :)
-  const [isModalOpen] = useModalContext();
-  console.log(isModalOpen);
+  const [isPushed] = useModalContext();
   return (
     <div>
-      {isModalOpen && <ContextQ1Modal />}
+      {isPushed[0] && isPushed[1] && <ContextQ1Modal />}
       <h2>문제 2 - 1</h2>
       <ContextQ1Detail />
       <NavigateButton to={'/2_context/q2'} />

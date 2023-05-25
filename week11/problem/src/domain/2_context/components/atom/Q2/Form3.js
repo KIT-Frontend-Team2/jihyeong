@@ -4,9 +4,8 @@ const ContextQ2Form3 = () => {
     const [_, dispatch, Key] = useListProvider();
     const onClick = () => {
         dispatch({
-            type: Key.RESET,
+          type: Key.RESET,
         });
-        console.log(Key.RESET);
     };
     return (
         <div>

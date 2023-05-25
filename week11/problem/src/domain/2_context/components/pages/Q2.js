@@ -25,9 +25,8 @@ const ContextQ2Page = () => {
     const [_, dispatch, Key] = useListProvider();
     const onClick = () => {
         dispatch({
-            type: Key.SUBMIT,
+          type: Key.SUBMIT,
         });
-        console.log(Key.RESET);
     };
 
     return (

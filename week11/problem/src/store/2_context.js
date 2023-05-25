@@ -8,17 +8,8 @@ const ModalProvider = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPushed, setIsPushed] = useState([false, false]);
 
-  useEffect(() => {
-    console.log(isPushed);
-    if (!isPushed[0] || !isPushed[1]) {
-      return setIsModalOpen(false);
-    }
-    setIsModalOpen(true);
-  }, [isPushed]);
 
-  return (
-    <ModalContext.Provider value={[isModalOpen, setIsPushed]}>{children}</ModalContext.Provider>
-  );
+  return <ModalContext.Provider value={[isPushed, setIsPushed]}>{children}</ModalContext.Provider>;
 };
 
 export default ModalProvider;
