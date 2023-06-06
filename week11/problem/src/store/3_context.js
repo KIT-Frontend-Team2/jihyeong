@@ -31,8 +31,7 @@ const reducer_context = (states, action) => {
         case Key.RESET:
             return [];
         case Key.SUBMIT:
-            let trueData = [];
-            trueData = states.filter((state) => state.isEdit === true);
+            const trueData = states.filter((state) => state.isEdit === true);
             trueData.forEach((data) => {
                 return console.log(data.nickname);
             });
