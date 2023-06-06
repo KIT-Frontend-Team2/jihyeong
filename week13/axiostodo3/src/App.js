@@ -1,22 +1,18 @@
 import "./App.css";
-import Layout from "./components/Layout";
-import MainPage from "./pages/main/_";
-import TodoPage from "./pages/todo";
-import { BrowserRouter, Route, RouterProvider, Routes } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import router from "./routes/routing";
 import { ThemeProvider } from "styled-components";
 import theme from "./styles/theme";
 import GlobalStyles from "./styles/global";
-import { TodoListProvider } from "context/todolist";
-
+import { RecoilRoot } from "recoil";
 function App() {
     return (
-        <TodoListProvider>
-        <ThemeProvider theme={theme}>
-            <GlobalStyles />
-            <RouterProvider router={router} />
-        </ThemeProvider>
-        </TodoListProvider>
+        <RecoilRoot>
+            <ThemeProvider theme={theme}>
+                <GlobalStyles />
+                <RouterProvider router={router} />
+            </ThemeProvider>
+        </RecoilRoot>
 
         //     <BrowserRouter>
         //     {/* HTML5를 지원하느 브라우저의  URL의 변화를 감지*/}

@@ -1,8 +1,8 @@
-import axios from "axios"
+import { axiosSign } from "utils/axios"
 
 const login = async (email, password) => {
     try {
-        const res = await axios.post('http://localhost:9000/user/login', { email, password }, {
+        const res = await axiosSign.post('/login', { email, password }, {
             withCredentials: true
         })
         localStorage.setItem('accessToken', res.data.data.token)
@@ -13,7 +13,7 @@ const login = async (email, password) => {
 
 const signUp = async (email, password) => {
     try {
-        await axios.post("http://localhost:9000/user/sign", { email, password })
+        await axiosSign.post("/sign", { email, password })
     } catch (err) {
         console.log(err)
     }

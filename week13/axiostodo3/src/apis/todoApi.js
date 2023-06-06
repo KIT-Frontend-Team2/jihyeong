@@ -1,9 +1,8 @@
-const { axiosInstance } = require("utils/axios");
+const { axiosTodo } = require("utils/axios");
 
 const getTodo = async () => {
     try {
-        const res = await axiosInstance.get('/todo');
-        console.log(res.data.data)
+        const res = await axiosTodo.get();
         return res.data.data
     } catch (err) {
         console.error(err)
@@ -18,12 +17,12 @@ const postTodo = async (title, content) => {
             err.message = '빈칸을 채워주세요'
             throw err
         }
-        await axiosInstance.post('/todo', {
+        await axiosTodo.post('', {
             title,
             content
         })
 
-        const res = await axiosInstance.get('/todo');
+        const res = await axiosTodo.get();
         return res.data.data
 
     } catch (err) {
@@ -33,8 +32,8 @@ const postTodo = async (title, content) => {
 
 const deleteTodo = async (id) => {
     try {
-        await axiosInstance.delete(`/todo/${id}`)
-        const res = await axiosInstance.get('/todo');
+        await axiosTodo.delete(`/${id}`)
+        const res = await axiosTodo.get();
         return res.data.data
     } catch (err) {
         throw err
@@ -43,11 +42,11 @@ const deleteTodo = async (id) => {
 
 const updateTodo = async (updatePost) => {
     try {
-        await axiosInstance.put(`/todo/${updatePost.id}`, {
+        await axiosTodo.put(`/${updatePost.id}`, {
             state: updatePost.state, title: updatePost.title, content: updatePost.content
         });
 
-        const res = await axiosInstance.get('/todo');
+        const res = await axiosTodo.get();
         return res.data.data
     } catch (err) {
         console.error(err)

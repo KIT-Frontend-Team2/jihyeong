@@ -7,14 +7,14 @@ import TodoList from "./componetns/List/todo-list";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import TODO_API from "apis/todoApi";
-import { useTodoList } from "context/todolist";
 import showTodoToastMessage, { toastOption } from "utils/toast-message";
 import useModal from "hooks/use-modal";
-
+import { useRecoilState } from 'recoil'
+import { TodoListAtom } from "atoms/todo";
 const TodoPage = () => {
 
-    const [todoList, setTodoList] = useTodoList();
-    const [isAddTodoModal, handChangeModal] = useModal();
+    const [todoList, setTodoList] = useRecoilState(TodoListAtom);
+    const [isAddTodoModal, setIsAddTodoModal] = useModal();
 
     useEffect(() => {
         const res = TODO_API.getTodo()
@@ -24,13 +24,13 @@ const TodoPage = () => {
     }, [])
 
     const onAddToDo = (e) => {
-        handChangeModal()
+        setIsAddTodoModal()
         showTodoToastMessage(e, setTodoList)
     }
 
     return (
         <>
-            {isAddTodoModal && <TodoAddModal onAddToDo={onAddToDo} onClose={handChangeModal} />}
+            {isAddTodoModal && <TodoAddModal onAddToDo={onAddToDo} onClose={setIsAddTodoModal} />}
             <S.Wrapper>
                 <S.Container>
                     <S.Title>List</S.Title>
@@ -39,7 +39,7 @@ const TodoPage = () => {
                     </S.Content>
                     <S.ButtonBox>
                         <BasicButton variant={"primary"} size={"full"}
-                            onClick={handChangeModal}
+                            onClick={setIsAddTodoModal}
                         >
                             추가
                         </BasicButton>

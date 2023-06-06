@@ -2,23 +2,24 @@ import styled from "styled-components";
 import { flexAlignCenter, flexCenter } from "../../../../styles/common";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faBan, faPen } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import React, { useState } from "react";
 import useInput from '../../../../hooks/use-input'
-import { useTodoList } from "context/todolist";
 import TODO_API from "apis/todoApi";
 import timeHelper from "utils/time-helper";
+import { useSetRecoilState } from 'recoil'
+import { TodoListAtom } from "atoms/todo";
 
 
 const OneTodo = ({ todo }) => {
     const { id, state, title, content, createdAt, updatedAt } = todo;
     const [isEditMode, setIsEditMode] = useState(false);
     const [editContent, onChangeEditContent] = useInput(content);
-    const [_, setTodoList] = useTodoList();
+    const setTodoList = useSetRecoilState(TodoListAtom);
 
     const handleTodoEdit = () => {
         if (!isEditMode) return setIsEditMode(true)
         const updatePost = {
-            id, state, title, content: editContent
+            ...todo, content: editContent
         }
         const res = TODO_API.updateTodo(updatePost)
         res.then((data) => {
@@ -38,12 +39,24 @@ const OneTodo = ({ todo }) => {
 
     const handleTodoCheck = () => {
         const post = {
-            id, state: !state, title, content
+            ...todo, state: Number(!state)
         }
+        setTodoList((prev) => {
+            const updateList = [...prev]
+            const selectNumber = updateList.findIndex((data) => data.id === id)
+            if (selectNumber !== -1) {
+                updateList[selectNumber] = post
+            }
+            console.log(updateList)
+            return updateList
+        }
+        )
+        // 낙관적 업데이트
         const res = TODO_API.updateTodo(post)
         res.then((data) => {
             setTodoList(data)
         })
+        // 이후 실제로 업데이트된 정보를 가져옵니다.
     }
 
     const updateTime = timeHelper(updatedAt)
@@ -70,7 +83,7 @@ const OneTodo = ({ todo }) => {
         </S.Wrapper>
     );
 };
-export default OneTodo;
+export default React.memo(OneTodo);
 
 const Wrapper = styled.li`
     width: 100%;

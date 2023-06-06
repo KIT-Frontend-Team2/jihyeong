@@ -4,8 +4,9 @@ import {
     flexCenter,
     modalBackGround,
 } from "../../../../styles/common";
+import React from "react";
 
-const TodoAddModal = ({onAddToDo, onClose})  => {
+const TodoAddModal = ({ onAddToDo, onClose }) => {
 
     return (
         <S.Wrapper>
@@ -15,7 +16,7 @@ const TodoAddModal = ({onAddToDo, onClose})  => {
                     <button type="button" onClick={onClose}>x</button>
                 </S.Title>
                 <S.Content>
-                    <input placeholder="제목을 입력해주세요" name="title"/>
+                    <input placeholder="제목을 입력해주세요" name="title" />
                     <textarea placeholder="할 일 내용을 입력해주세요" name="content"></textarea>
                 </S.Content>
                 <S.Button>ADD</S.Button>
@@ -23,7 +24,7 @@ const TodoAddModal = ({onAddToDo, onClose})  => {
         </S.Wrapper>
     );
 };
-export default TodoAddModal;
+export default React.memo(TodoAddModal);
 
 const Wrapper = styled.div`
     ${modalBackGround};
