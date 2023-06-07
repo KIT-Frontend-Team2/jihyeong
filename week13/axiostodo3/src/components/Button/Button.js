@@ -1,3 +1,4 @@
+import React from "react";
 import Button from "./style";
 
 const BasicButton = ({ size, shape, variant, children, ...rest }) => {
@@ -7,4 +8,4 @@ const BasicButton = ({ size, shape, variant, children, ...rest }) => {
         </Button>
     );
 };
-export default BasicButton;
+export default React.memo(BasicButton);

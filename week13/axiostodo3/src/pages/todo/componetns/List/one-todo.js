@@ -9,7 +9,6 @@ import timeHelper from "utils/time-helper";
 import { useSetRecoilState } from 'recoil'
 import { TodoListAtom } from "atoms/todo";
 
-
 const OneTodo = ({ todo }) => {
     const { id, state, title, content, createdAt, updatedAt } = todo;
     const [isEditMode, setIsEditMode] = useState(false);
@@ -30,7 +29,7 @@ const OneTodo = ({ todo }) => {
 
     const handleTodoDelete = () => {
         if (window.confirm("정말 삭제하시겠습니까")) {
-            const res = TODO_API.deleteTodo(id)
+            const res = TODO_API.deleteTodo(id) // 1, 2
             res.then((data) => {
                 setTodoList(data)
             })

@@ -2,7 +2,7 @@
 1. .env
     가장 우선 순위가 낮은 환경변수 설정 파일
 
-2. .env.develpoment
+2. .env.development
     개발 환경에서만 작동되는 환경변수 설정 파일
 
 3. .env.production
