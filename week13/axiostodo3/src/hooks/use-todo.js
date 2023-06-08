@@ -14,7 +14,7 @@ const useTodoList = () => {
         fetchTodoList();
     }, []);
 
-    return todoList;
+    return [todoList, setTodoList];
 };
 
 export default useTodoList

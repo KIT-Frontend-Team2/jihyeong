@@ -6,6 +6,20 @@ const useTodoAction = () => {
 
     const setTodoList = useSetRecoilState(TodoListAtom);
 
+    const todoGet = () => {
+        const res = TODO_API.getTodo();
+        res.then((data) => {
+            setTodoList(data);
+        });
+    };
+
+    const todoPost = (title, content) => {
+        const res = TODO_API.postTodo(title, content);
+        res.then((data) => {
+            setTodoList(data);
+        });
+    }
+
     const todoEdit = (todo, editContent, isEditMode, setIsEditMode) => {
         if (!isEditMode) return setIsEditMode(true);
         const updatePost = {
@@ -50,7 +64,7 @@ const useTodoAction = () => {
     };
 
 
-    return { todoEdit, todoDelete, todoCheck };
+    return { todoGet, todoEdit, todoDelete, todoCheck, todoPost };
 }
 
 export default useTodoAction;

@@ -9,15 +9,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import showTodoToastMessage, { toastOption } from "utils/toast-message";
 import useModal from "hooks/use-modal";
 import useTodoList from "hooks/use-todo";
+import useTodoAction from "hooks/use-todoAction";
 const TodoPage = () => {
 
     const [isAddTodoModal, setIsAddTodoModal] = useModal();
+    const [todoList, setTodoList] = useTodoList()
 
-    const todoList = useTodoList()
 
     const onAddToDo = (e) => {
         setIsAddTodoModal()
-        showTodoToastMessage(e)
+        showTodoToastMessage(e, setTodoList)
     }
 
     return (
