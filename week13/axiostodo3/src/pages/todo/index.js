@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import BasicButton from "../../components/Button/Button";
 import styled from "styled-components";
 import { flexAlignCenter, flexCenter } from "../../styles/common";
@@ -6,26 +6,18 @@ import TodoAddModal from "./componetns/Modal/add-modal";
 import TodoList from "./componetns/List/todo-list";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import TODO_API from "apis/todoApi";
 import showTodoToastMessage, { toastOption } from "utils/toast-message";
 import useModal from "hooks/use-modal";
-import { useRecoilState } from 'recoil'
-import { TodoListAtom } from "atoms/todo";
+import useTodoList from "hooks/use-todo";
 const TodoPage = () => {
 
-    const [todoList, setTodoList] = useRecoilState(TodoListAtom);
     const [isAddTodoModal, setIsAddTodoModal] = useModal();
 
-    useEffect(() => {
-        const res = TODO_API.getTodo()
-        res.then((data) => {
-            setTodoList(data)
-        })
-    }, [])
+    const todoList = useTodoList()
 
     const onAddToDo = (e) => {
         setIsAddTodoModal()
-        showTodoToastMessage(e, setTodoList)
+        showTodoToastMessage(e)
     }
 
     return (

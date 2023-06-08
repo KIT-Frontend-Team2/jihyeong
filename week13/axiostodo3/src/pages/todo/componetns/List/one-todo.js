@@ -4,62 +4,29 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faBan, faPen } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
 import useInput from '../../../../hooks/use-input'
-import TODO_API from "apis/todoApi";
 import timeHelper from "utils/time-helper";
-import { useSetRecoilState } from 'recoil'
-import { TodoListAtom } from "atoms/todo";
+import useTodoAction from "hooks/use-todoAction";
 
 const OneTodo = ({ todo }) => {
     const { id, state, title, content, createdAt, updatedAt } = todo;
+
     const [isEditMode, setIsEditMode] = useState(false);
     const [editContent, onChangeEditContent] = useInput(content);
-    const setTodoList = useSetRecoilState(TodoListAtom);
-
-    const handleTodoEdit = () => {
-        if (!isEditMode) return setIsEditMode(true)
-        const updatePost = {
-            ...todo, content: editContent
-        }
-        const res = TODO_API.updateTodo(updatePost)
-        res.then((data) => {
-            setTodoList(data)
-        })
-        setIsEditMode(false)
-    }
-
-    const handleTodoDelete = () => {
-        if (window.confirm("정말 삭제하시겠습니까")) {
-            const res = TODO_API.deleteTodo(id) // 1, 2
-            res.then((data) => {
-                setTodoList(data)
-            })
-        }
-    }
-
-    const handleTodoCheck = () => {
-        const post = {
-            ...todo, state: Number(!state)
-        }
-        setTodoList((prev) => {
-            const updateList = [...prev]
-            const selectNumber = updateList.findIndex((data) => data.id === id)
-            if (selectNumber !== -1) {
-                updateList[selectNumber] = post
-            }
-            console.log(updateList)
-            return updateList
-        }
-        )
-        // 낙관적 업데이트
-        const res = TODO_API.updateTodo(post)
-        res.then((data) => {
-            setTodoList(data)
-        })
-        // 이후 실제로 업데이트된 정보를 가져옵니다.
-    }
+    const { todoEdit, todoDelete, todoCheck } = useTodoAction()
 
     const updateTime = timeHelper(updatedAt)
 
+    const handleTodoCheck = () => {
+        todoCheck(todo, id, state)
+    }
+
+    const handleTodoDelete = () => {
+        todoDelete(id)
+    }
+
+    const handleTodoEdit = () => {
+        todoEdit(todo, editContent, isEditMode, setIsEditMode)
+    }
 
     return (
         <S.Wrapper state={state}>
