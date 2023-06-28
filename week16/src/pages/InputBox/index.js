@@ -27,7 +27,9 @@ const InputBox = () => {
 				setKeyWords(prev => {
 					return [inputRef.current.value, ...prev]
 				})
-			} catch (err) {}
+			} catch (err) {
+				console.log(err)
+			}
 		}, 300)
 	}
 
@@ -71,7 +73,7 @@ const InputBox = () => {
 					{keyWords.length > 0 && (
 						<KeyWordList>
 							{keyWords.map((keyword, index) => {
-								if (isShow === 0) {
+								if (index === 0) {
 									return (
 										<>
 											{inputRef.current.value.trim().length !== 0 && (
@@ -85,9 +87,7 @@ const InputBox = () => {
 												</>
 											)}
 											<RecommendWord>
-												{inputRef.current.value.trim().length === 0 || isShow
-													? '최근 검색어'
-													: '추천 검색어'}
+												{isShow ? '최근 검색어' : '추천 검색어'}
 											</RecommendWord>
 											{isShow &&
 												recentSearch.map((list, index) => {
@@ -131,7 +131,7 @@ export default InputBox
 
 const Input = styled.div`
 	position: relative;
-	width: 100%;
+	width: 60%;
 	input {
 		padding: 20px 40px 20px 20px;
 		width: 100%;
